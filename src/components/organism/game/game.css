@@ -1,0 +1,232 @@
+@-webkit-keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -webkit-transform: translateY(0);
+  }
+  40% {
+    -webkit-transform: translateY(-11px);
+  }
+  60% {
+    -webkit-transform: translateY(-5px);
+  }
+}
+
+@-moz-keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -moz-transform: translateY(0);
+  }
+  40% {
+    -moz-transform: translateY(-11px);
+  }
+  60% {
+    -moz-transform: translateY(-5px);
+  }
+}
+
+@-o-keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    -o-transform: translateY(0);
+  }
+  40% {
+    -o-transform: translateY(-11px);
+  }
+  60% {
+    -o-transform: translateY(-5px);
+  }
+}
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-11px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+.timer {
+  margin: auto;
+  width: 7rem;
+  height: 7rem;
+}
+
+@media screen and (max-width: 640px) {
+  .timer {
+    writing-mode: tb-rl;
+    transform: rotate(-180deg);
+  }
+}
+@media screen and (max-width: 840px) {
+  .timer {
+    width: 3rem;
+    height: 3rem;
+  }
+}
+
+/* remove arrow from number texts */
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input {
+  text-align: center;
+}
+.trade-tag {
+  position: absolute !important;
+  /* z-index: 10; */
+}
+@media screen and (max-width: 640px) {
+  .trade-tag {
+    padding: 0.3rem;
+  }
+}
+
+.transition {
+  transition: all ease-in-out 0.6s;
+}
+
+.board {
+  backface-visibility: hidden;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+#trade-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 70vw;
+  margin: auto;
+}
+@media screen and (max-width: 640px) {
+  #trade-form {
+    width: auto;
+  }
+}
+
+.position-screen {
+  width: min(13.5vw, 13rem);
+  /* aspect-ratio: 13/10; */
+}
+
+.trade-screen {
+  width: 13rem;
+}
+
+.position-screen .trade-tag {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+}
+.positionText {
+  font-size: 1.1vw;
+}
+
+/* loading spinner */
+.container-spinner {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  gap: 2rem;
+  display: grid;
+  min-height: 100dvh;
+  place-items: center;
+  background: radial-gradient(50% 98.88% at 50% 50%, #345d7e 0%, #020a0d 100%)
+    /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+}
+
+.spinner {
+  --size: min(80vw, 25rem);
+  --perc: 25;
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+}
+
+.spinner::before,
+.spinner::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  border: calc(var(--size) * 0.1) solid white;
+  border-radius: 50%;
+}
+
+.spinner::before {
+  counter-reset: variable var(--perc);
+  content: "";
+  border-color: rgb(255 255 255 / 0.25);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: calc(var(--size) * 0.35);
+}
+.spinner::after {
+  content: "";
+  --p: clamp(0%, calc(var(--perc) * 1%), 100%);
+  clip-path: polygon(
+    /* Start at top left */ 0% 0%,
+    clamp(0%, calc(2 * var(--p)), 100%) 0%,
+    clamp(0%, calc(2 * var(--p)), 100%)
+      clamp(0%, calc(2 * (var(--p) - 50%)), 100%),
+    /* Centre point, needed to make the angles work on a circle */ 50% 50%,
+    clamp(0%, calc(2 * (var(--p) - 50%)), 100%)
+      clamp(0%, calc(2 * var(--p)), 100%),
+    0% clamp(0%, calc(2 * var(--p)), 100%),
+    /* Return to top left */ 0% 0%
+  );
+  animation: spin linear infinite 1s;
+  pointer-events: none;
+}
+
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+
+.screenreader {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

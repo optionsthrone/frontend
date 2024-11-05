@@ -1,0 +1,14 @@
+/* .stack,
+.stack::before,
+.stack::after {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+
+  -webkit-perspective: 3000px;
+  perspective: 3000px;
+
+  -webkit-transform-origin: center;
+  transform-origin: center;
+
+  box-sizing: border-box;
+} */

@@ -2,9 +2,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Deploy an AWS Amplify Frontend Application
 
 Parameters:
+  
   AmplifyAppName:
     Type: String
     Description: Name of the Amplify App
+
   Repository:
     Type: String
     Description: GitHub Repository URL (
@@ -16,8 +18,13 @@ Parameters:
     Description: The branch of the repository to be deployed
   
   Stage:
-      Type: String
-      Default: test
+    Type: String
+    Default: test
+  
+  GitToken:
+    Type: String
+    Default: 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  
+
 
 
 Resources:
@@ -26,7 +33,7 @@ Resources:
     Properties:
       Name: !Ref AmplifyAppName
       Repository: !Ref Repository
-      AccessToken: 
+      AccessToken: !Ref GitToken
       BuildSpec: build.yaml
       Platform: WEB_COMPUTE
 
@@ -40,7 +47,3 @@ Outputs:
   AmplifyAppId:
     Description: The ID of the created Amplify App
     Value: !Ref FrontEndApp
-  AmplifyAppUrl:
-    Description: The URL of the Amplify App
-    Value: !GetAtt FrontEndApp.DefaultDomain
-
