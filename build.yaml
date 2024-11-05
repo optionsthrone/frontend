@@ -1,0 +1,20 @@
+version: 1
+
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install # Install dependencies at the root level
+        # Set the environment variables for the frontend based on the user branch environment variable
+        - 'echo "NEXT_PUBLIC_APP_API_URL=https://api.callit.gg/${USER_BRANCH}" >> .env'
+        - 'echo "NEXT_PUBLIC_APP_WSAPI_URL=wss://wsapi.callit.gg/${USER_BRANCH}" >> .env'
+    build:
+      commands:
+        - npm run build 
+  artifacts:
+    baseDirectory: .next # Specify the build output directory
+    files:
+      - "**/*" # Include all files in the build directory
+  cache:
+    paths:
+      - node_modules/**/* # Cache the node_modules folder

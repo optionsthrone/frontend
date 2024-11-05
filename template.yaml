@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy an AWS Amplify Frontend Application
+
+Parameters:
+  AmplifyAppName:
+    Type: String
+    Description: Name of the Amplify App
+  Repository:
+    Type: String
+    Description: GitHub Repository URL (
+    Default: https://github.com/optionsthrone/frontend
+    
+  Branch:
+    Type: String
+    Default: main
+    Description: The branch of the repository to be deployed
+  
+  Stage:
+      Type: String
+      Default: test
+
+
+Resources:
+  FrontEndApp:
+    Type: AWS::Amplify::App
+    Properties:
+      Name: !Ref AmplifyAppName
+      Repository: !Ref Repository
+      AccessToken: 
+      BuildSpec: build.yaml
+      Platform: WEB_COMPUTE
+
+  FrontendBranch:
+      Properties:
+        AppId: !GetAtt FrontEndApp.AppId
+        BranchName: !Ref Branch 
+        Stage : !Ref Stage
+
+Outputs:
+  AmplifyAppId:
+    Description: The ID of the created Amplify App
+    Value: !Ref FrontEndApp
+  AmplifyAppUrl:
+    Description: The URL of the Amplify App
+    Value: !GetAtt FrontEndApp.DefaultDomain
+
