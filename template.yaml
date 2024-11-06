@@ -9,7 +9,7 @@ Parameters:
 
   Repository:
     Type: String
-    Description: GitHub Repository URL (
+    Description: GitHub Repository URL 
     Default: https://github.com/optionsthrone/frontend
     
   Branch:
@@ -19,29 +19,33 @@ Parameters:
   
   Stage:
     Type: String
-    Default: test
+    Default: EXPERIMENTAL
   
-  GitToken:
+  GitHubOAuthToken:
     Type: String
-    Default: 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  
 
 
 
 Resources:
+
+
   FrontEndApp:
     Type: AWS::Amplify::App
     Properties:
       Name: !Ref AmplifyAppName
       Repository: !Ref Repository
-      AccessToken: !Ref GitToken
-      BuildSpec: build.yaml
+      AccessToken: !Ref GitHubOAuthToken
+      BuildSpec: "version: 1\nfrontend:\n  phases:\n    preBuild:\n      commands:\n        - npm install # Install dependencies at the root level\n        # Set the environment variables for the frontend based on the user branch environment variable\n        - 'echo \"NEXT_PUBLIC_APP_API_URL=https://api.callit.gg/${USER_BRANCH}\" >> .env'\n        - 'echo \"NEXT_PUBLIC_APP_WSAPI_URL=wss://wsapi.callit.gg/${USER_BRANCH}\" >> .env'\n    build:\n      commands:\n        - npm run build # Build the app\n  artifacts:\n    baseDirectory: .next # Specify the build output directory\n    files:\n      - \"**/*\" # Include all files in the build directory\n  cache:\n    paths:\n      - node_modules/**/* # Cache the node_modules folder\n"
       Platform: WEB_COMPUTE
 
+
   FrontendBranch:
+      Type: AWS::Amplify::Branch
       Properties:
         AppId: !GetAtt FrontEndApp.AppId
         BranchName: !Ref Branch 
         Stage : !Ref Stage
+        EnableAutoBuild : true
 
 Outputs:
   AmplifyAppId:
